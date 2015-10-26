@@ -1,0 +1,578 @@
+﻿Title: 'Smart Home Scenarios Ontology'.
+Author: 'Efi Kostakou'.
+
+
+Mary is an adult .
+Paul is an owner and is an adult.
+Emma is a kid.
+John is a kid.
+Every adult is a resident.
+Every kid is a resident.
+Every owner is a resident.
+
+Living-Room is a moderoom.
+Bedroom is a moderoom.
+Bathroom is a regularroom .
+Kitchen is a regularroom .
+Every moderoom is a room .
+Every regularroom is a room .
+
+Part-1: 'Temperature'.
+
+Every temperature is a parameter.
+Every indoortemperature is a temperature.
+Every outdoortemperature is a temperature.
+
+
+Every aircondition is a smartdevice.
+Every radiator is a smartdevice.
+Every window is a smartdevice .
+
+
+
+Radiator-Living-Room is a radiator and is-located-at Living-Room .
+Radiator-Bedroom is a radiator and is-located-at Bedroom .
+Air-Condition-Living-Room is an aircondition and is-located-at Living-Room .
+Air-Condition-Bedroom is an aircondition and is-located-at Bedroom.
+Window-Bedroom is a window and is-located-at Bedroom.
+Window-Living-Room is a window and is-located-at Living-Room .
+Window-Kitchen is a window and is-located-at Kitchen .
+Window-Bathroom is a window and is-located-at Bathroom.
+Temperature-Living-Room is an indoortemperature and refers-to Living-Room .
+Temperature-Bedroom is an indoortemperature and refers-to Bedroom.
+Outdoor-Temperature is an outdoortemperature .
+Presence-Detection-Living-Room is a presence-detection and refers-to Living-Room .
+Presence-Detection-Bedroom is a presence-detection and refers-to Bedroom .
+Presence-Detection-Bathroom is a presence-detection and refers-to Bathroom .
+Presence-Detection-Kitchen is a presence-detection and refers-to Kitchen.
+
+If a house has a room and the room has-status Occupied then the house has-status Occupied.
+
+If an indoortemperature refers-to a room and the indoortemperature has-value greater-than 25 then the room has-status Hot.
+If Outdoor-Temperature has-value greater-than 25 then Outside has-status Hot.
+If an indoortemperature refers-to a room and the indoortemperature has-value lower-than 20 then the room has-status Cold.
+If Outdoor-Temperature has-value lower-than 20 then Outside has-status Cold.
+
+
+Comment: Rule no1- Cooling process-If someone is at home and indoor temperature of a room is over 25 degrees and outside temperature is over 20 -> AirCondition Activated.
+
+
+If a house has-status Occupied and Outside has-status Hot and a room has-status Hot and an aircondition is-located-at the room and a radiator is-located-at the room and a window is-located-at the room then the aircondition has-status On and the radiator has-status Off  and the window has-status Closed .
+
+
+Comment: Rule no2- Cooling process-If someone is at home and indoor temperature of a room is over 25 degrees and outside temperature is lower than 20 
+
+
+    1st scenario: Security-Mode Off & Home-Cinema Off & Sleep Mode Off-> Windows Open 
+                  (moderoom is a room when a Home-Cinema or Sleep Mode can be activated-eg Bedroom, Living Room
+                   regularroom is every other room - Bathroom, Kitchen). 
+
+If Security-Mode has-status Off then Security-Mode has-final-status Off.
+If Security-Mode has-status Deactivated then Security-Mode has-final-status Off.
+
+
+If a house has-status Occupied and Outside has-status Cold and a regularroom has-status Hot and an aircondition is-located-at the regularroom and a radiator is-located-at the regularroom and a window is-located-at the regularroom and Security-Mode has-final-status Off then the window has-status Open and the aircondition has-status Off and the radiator has-status Off.
+
+If a house has-status Occupied and Outside has-status Cold and a moderoom has-status Hot and an aircondition is-located-at the moderoom and a radiator is-located-at the moderoom and a window is-located-at the moderoom and Security-Mode has-final-status Off and a comfort refers-to the moderoom and the comfort has-final-status Off then the window has-status Open and the aircondition has-status Off and the radiator has-status Off.
+
+
+    Comment:
+    2nd scenario: Security-Mode On or Home Cinema/Sleep Mode On -> Air-condition On.
+If a security has-status On then the security has-final-status On.
+If a security has-status Activated then the security has-final-status On.
+
+If a house has-status Occupied and Outside has-status Cold and a room has-status Hot and an aircondition is-located-at the room and a radiator is-located-at the room and a window is-located-at the room and a security has-final-status On then the aircondition has-status On and the radiator has-status Off.
+
+If a house has-status Occupied and Outside has-status Cold and a moderoom has-status Hot and an aircondition is-located-at the moderoom and a radiator is-located-at the moderoom and a window is-located-at the moderoom and a comfort refers-to the moderoom and the comfort has-final-status On then the aircondition has-status On and the radiator has-status Off.
+
+Comment: Rule no3- Heating Process-If someone is at home and indoor temperature<20 -> Radiator Activated.
+
+If Smart-Home has-status Occupied and a room has-status Cold and a radiator is-located-at the room and an aircondition is-located-at the room and a window is-located-at the room then the radiator has-status On and the aircondition has-status Off and the window has-status Closed.
+
+
+
+Comment: Rule no4- If House empty then Heating and Cooling Process stop.
+
+If Smart-Home has-status Empty and a room exists and an aircondition is-located-at the room and a radiator is-located-at the room and a window is-located-at the room then the radiator has-status Off and the aircondition has-status Off and the window has-status Closed.
+
+
+Part-2: 'Lighting'.
+
+Every light is a smartdevice.
+Every ceilinglight is a light .
+Outdoor-Lights is an outdoorlight.
+Every outdoorlight is a light.
+
+Every curtain is a smartdevice.
+Every blinds is a smartdevice .
+Every window has a blinds.
+Every window has a curtain .
+If a window has a curtain and the window is-located-at a room then the curtain is-located-at the room.
+If a window has a blinds and the window is-located-at a room then the blinds is-located-at the room.
+Window-Bedroom has Blinds-Bedroom and has Curtain-Bedroom.
+Curtain-Bedroom is a curtain.
+Blinds-Bedroom is a blinds.
+Window-Living-Room has Blinds-Living-Room and has Curtain-Living-Room.
+Curtain-Living-Room is a curtain.
+Blinds-Living-Room is a blinds.
+
+Window-Kitchen has Blinds-Kitchen and has Curtain-Kitchen.
+Curtain-Kitchen is a curtain.
+Blinds-Kitchen is a blinds.
+Window-Bathroom has Blinds-Bathroom and has Curtain-Bathroom.
+Curtain-Bathroom is a curtain.
+Blinds-Bathroom is a blinds.
+
+Ceiling-Light-Bedroom is a ceilinglight and is-located-at Bedroom .
+Ceiling-Light-Living-Room is a ceilinglight and is-located-at Living-Room.
+Ceiling-Light-Bathroom is a ceilinglight and is-located-at Bathroom.
+Ceiling-Light-Kitchen is a ceilinglight and is-located-at Kitchen .
+
+
+Current-Time is a time-parameter.
+Every time-parameter is a parameter.
+Current-Time has-value ( some time-24-hours value ) .
+Every value-of time-24-hours is something ( greater-than 0 as-well-as lower-or-equal-to 24).
+
+Every day is a parameter. 
+Every nighttime is a day.
+Every daytime is a day.
+Night is a nighttime.
+Daytime is a daytime.
+
+
+If Current-Time has-value equal-to the value (1) and the value (1) is lower-than 8 then Night has-value equal-to 1.
+
+
+If Current-Time has-value equal-to the value (1) and the value (1) is greater-than 16 then Night has-value equal-to 1.
+
+
+If Current-Time has-value equal-to the value (1) and the value (1) is greater-or-equal-to 8 and the value (1) is lower-or-equal-to 16 then Daytime has-value equal-to 1.
+
+
+
+Comment: Rule no1: If daytime and no Home Cinema Mode & Sleep Mode activated-> blinds and curtains open.
+
+If a daytime has-value equal-to 1 and a blinds exists and the blinds is-located-at a room and a curtain is-located-at the room  and a ceilinglight is-located-at the room and a comfort refers-to the room and the comfort has-final-status Off then the blinds has-status Open and the curtain has-status Open and the ceilinglight has-status Off.
+
+
+
+If a daytime has-value equal-to 1 and a blinds exists and the blinds is-located-at a regularroom  and a curtain is-located-at the regularroom  and a light is-located-at the regularroom then the blinds has-status Open and the curtain has-status Open and the light has-status Off.
+
+
+
+Comment: Rule no2: If night-> blinds and curtains close.
+                          
+
+If a presence-detection refers-to a room and the presence-detection has-value equal-to 1 then the room has-status Occupied.
+
+If a nighttime has-value equal-to 1 and a room exists and a blinds is-located-at the room and a curtain is-located-at the room then the blinds has-status Closed and the curtain has-status Closed.
+
+
+    Comment: If night and Home Cinema & Sleep Mode Off and a room Occupied-> Lights On
+             If night and room Empty -> Lights Off.
+
+If a comfort has-status Off then the comfort has-final-status Off.
+If a comfort has-status Deactivated then the comfort has-final-status Off.
+If a comfort has-status On then the comfort has-final-status On.
+If a comfort has-status Activated then the comfort has-final-status On.
+
+If a nighttime has-value equal-to 1 and a moderoom has-status Occupied and a comfort refers-to the moderoom and the comfort has-final-status Off and a ceilinglight  is-located-at the moderoom  then the ceilinglight has-status On.
+  
+
+If a nighttime has-value equal-to 1 and a regularroom has-status Occupied and a light is-located-at the regularroom then the light has-status On.
+
+If a nighttime has-value equal-to 1 and a room has-status Empty and a ceilinglight is-located-at the room then the ceilinglight has-status Off.
+
+
+
+Comment:Rule no3: If night -> outdoor lights 'On'/ If day-> outdoor lights 'Off'.
+
+If a nighttime has-value equal-to 1 and an outdoorlight exists then the outdoorlight has-status On. 
+
+If a daytime has-value equal-to 1 and an outdoorlight exists then the outdoorlight has-status Off.
+
+ 
+
+
+
+Part-3: 'Security'.
+
+
+Every door is a smartdevice.
+Every interior is a door.
+Door-Living-Room is an interior and is-located-at Living-Room .
+Door-Bedroom is an interior and is-located-at Bedroom.
+Every exterior is a door.
+Front-Door is an exterior and is-located-at Living-Room .
+
+
+Every exterior has a buzzer.
+Every buzzer is a smartdevice .
+Front-Door has Buzzer-Front-Door.
+Buzzer-Front-Door is a buzzer.
+
+Comment: Rule no1 - Exterior doors remain locked; unless one of the following exceptions applies.
+
+Comment: Rule no2 - 1)Exterior doors unlock automatically upon the arrival of an adult
+                    (eg: "Paul approaches Front-Door.")
+                    2) Exterior doors lock automatically once closed
+                    (eg:"Paul closes Front-Door.") .
+                    
+                
+If an adult approaches an exterior and Security-Mode has-final-status Off then for the adult and the exterior execute <?
+
+   KnowledgeDelete(string.Format("{0} has-status Locked.", exterior));
+   KnowledgeInsert(string.Format("{0} has-status Unlocked.", exterior)); 
+   KnowledgeDelete(string.Format("{0} approaches {1}.", adult, exterior));
+?>.
+
+
+If a resident closes an exterior and Security-Mode has-final-status Off then for the exterior and the resident execute <?
+
+   KnowledgeDelete(string.Format("{0} has-status Unlocked.", exterior));
+   KnowledgeInsert(string.Format("{0} has-status Locked.", exterior)); 
+   KnowledgeDelete(string.Format("{0} closes {1}.", resident, exterior));
+ 
+?>.
+
+Comment: If a kid enters or leaves the house then the owner is informed
+         (eg: "Emma enters Smart-Home." , "John leaves Smart-Home." ).
+
+If a kid enters Smart-Home then for the kid execute <?
+
+   KnowledgeDelete(string.Format("{0} enters Smart-Home .", kid));
+   WriteMessage("[" + DateTime.Now + "] "  + kid + " enters the house. ");   
+ 
+?>.
+
+If a kid leaves Smart-Home then for the kid execute <?
+
+   KnowledgeDelete(string.Format("{0} leaves Smart-Home .", kid));
+   WriteMessage("[" + DateTime.Now + "] "  + kid + " leaves the house. ");   
+ 
+?>.
+
+Comment:- Fire/Gas Leak case: 
+    1) The alarm goes off  / 
+    2) Notification message /
+
+    In order for the rule to be put in practice, copy paste the following sentence and click the "Run Active Rules" button from the "Tools" tab :
+
+    eg "Fire occurs-at Bedroom." "Gas-Leak occurs-at Kitchen." .
+    
+
+Every accidentalarm is an alarm.
+Every accident is a special-event.
+Fire is an accident that triggers Fire-Alarm .
+Gas-Leak is an accident that triggers Gas-Leak-Alarm .
+Gas-Leak is an accident.
+Fire-Alarm is an accidentalarm.
+Gas-Leak-Alarm is an accidentalarm.
+
+If an accident occurs-at a room and the accident triggers an alarm then for the accident and the room and the alarm execute <?
+    
+   KnowledgeInsert(string.Format("{0} has-status On.", alarm)); 
+   KnowledgeDelete(string.Format("{0} occurs-at {1}.", accident , room));
+   WriteMessage("[" + DateTime.Now + "] " + alarm + " is activated due to " + accident + " in  " + room + ". Do you wish to call the fire department?");
+   
+?>.
+
+Comment: If the alarm is Deactivated then -> Notification Message
+
+In order for the rule to be put in practice, delete "(Name of Alarm) has-status On" , copy paste the following sentence and click the "Run Active Rules" button from the "Tools" tab :
+
+    "(Name of Alarm) has-status Deactivated." .
+
+If an accidentalarm has-status Deactivated then for the accidentalarm  execute <?
+   KnowledgeDelete(string.Format("{0} has-status Deactivated.", accidentalarm)); 
+   WriteMessage("[" + DateTime.Now + "] " + accidentalarm + " has been deactivated. ");
+  
+?>.
+
+Comment: Rule no4- Door beeps when open (eg "Front-Door is Open.").
+
+If an exterior has-status Unlocked and Security-Mode has-status Off and the exterior has a buzzer then the buzzer has-status On.
+
+If an exterior has-status Locked and the exterior has a buzzer then the buzzer has-status Off.
+
+Comment: Rule no5 - In case of empty house, system asks for permission for Security Mode activation . 
+
+Smart-Home is a house.
+Bedroom is-located-at Smart-Home .
+Living-Room is-located-at Smart-Home .
+If a presence refers-to a room and the room is-located-at a house then the presence is-located-at the house .
+If X is-located-at  Y then Y has X.
+Every presence-detection is a presence.
+Every presence is a parameter.
+
+
+If Presence-Detection-Bedroom has-value equal-to 0 and Presence-Detection-Living-Room has-value equal-to 0 and Presence-Detection-Bathroom has-value equal-to 0 then Smart-Home has-status Empty .
+
+If a house has-status Empty and a security has-status Off and an owner exists then for the house and the owner and the security execute <?
+   WriteMessage("[" + DateTime.Now + "] " + owner + " , "+ house +" is empty. Do you wish to turn "+ security+ " On? ");
+  
+?>.
+
+
+Comment: Rule No6- Security Mode Activation.
+
+Security-Mode is a security.
+Security-Mode has Burglary-Alarm .
+Every security is a mode.
+Burglary is an incident that triggers Burglary-Alarm .
+Burglary-Alarm is an incidentalarm.
+Every incidentalarm is an alarm.
+Every incident is a special-event .
+
+
+
+
+
+Comment: If Security Mode activated-> every exterior door and window closes 
+         (Delete "Security-Mode has-status Off." and copy paste "Security-Mode has-status Activated.") .
+
+If a security has-status Activated and a window exists then for the security and the window execute <?
+   
+   KnowledgeDelete(string.Format("{0} has-status Open.", window)); 
+   KnowledgeInsert(string.Format("{0} has-status Closed.", window));
+   KnowledgeDelete(string.Format("{0} has-status Activated.", security)); 
+   KnowledgeInsert(string.Format("{0} has-status On.", security)); 
+
+?>.
+
+
+If a security has-status Activated and an exterior exists and the security has an incidentalarm then for the security and the exterior and the incidentalarm execute <?
+   KnowledgeDelete(string.Format("{0} has-status Unlocked.", exterior)); 
+   KnowledgeInsert(string.Format("{0} has-status Locked.", exterior)); 
+   KnowledgeDelete(string.Format("{0} has-status Off.", security)); 
+   KnowledgeDelete(string.Format("{0} has-status Activated.", security)); 
+   KnowledgeInsert(string.Format("{0} has-status On.", security)); 
+   KnowledgeInsert(string.Format("{0} has-status Off.", incidentalarm)); 
+   WriteMessage("[" + DateTime.Now + "] " + security + " has been activated. ");
+?>.
+
+
+
+
+
+
+
+Comment: Alarm Activation.
+
+Comment: If a window opens or an exterior door is unlocked while security mode is on -> burglary. 
+
+If Burglary-Alarm has-status Off then Burglary-Alarm has-final-status Off.
+
+
+
+If Security-Mode has-status On and Burglary-Alarm has-final-status Off and a window exists and the window has-status Open and the window is-located-at a room then Burglary occurs-at the room.
+If Security-Mode has-status On and Burglary-Alarm has-final-status Off and an exterior exists and the exterior has-status Unlocked and the exterior is-located-at a room then Burglary occurs-at the room.
+
+
+Comment: If burglary-> alarm has status On and notification.
+
+If an incident occurs-at a room and the incident triggers an alarm and an exterior has-status Unlocked then for the incident and the alarm and the room and the exterior execute <?
+   KnowledgeDelete(string.Format("{0} has-status Off.", alarm));
+   KnowledgeInsert(string.Format("{0} has-status On.", alarm)); 
+   WriteMessage("[" + DateTime.Now + "] " + alarm + " has been triggered due to possible " +incident+ " in " + room + " through " + exterior + " . Do you wish to call the police department?");
+  
+?>.
+
+If an incident occurs-at a room and the incident triggers an alarm and a window has-status Open then for the incident and the alarm and the room and the window execute <?
+   KnowledgeDelete(string.Format("{0} has-status Off.", alarm));
+   KnowledgeInsert(string.Format("{0} has-status On.", alarm)); 
+   WriteMessage("[" + DateTime.Now + "] " + alarm + " has been triggered due to possible " +incident+ " in " + room + " through " + window + " . Do you wish to call the police department?");
+  
+?>.
+
+
+
+Comment: In case of an empty room, the door that communicates with the other rooms locks in order to "trap" the intruder and provide safety to the residents.
+
+If a presence refers-to a room and the presence has-value equal-to 0 then the room has-status Empty.
+
+If an incident occurs-at a room and the room has-status Empty and an interior is-located-at the room then for the incident and the room and the interior execute <?
+   KnowledgeInsert(string.Format("{0} has-status Locked.", interior)); 
+   WriteMessage("[" + DateTime.Now + "] " + interior + " has been locked due to possible " +incident+ " in " + room + ". Do you wish to unlock the door?");
+  
+?>.
+
+
+Comment: Alarm deactivation- Unlock interior door.
+If an alarm has-status Deactivated and an interior has-status Locked then for the alarm and the interior execute <?
+   KnowledgeDelete(string.Format("{0} has-status Locked.", interior));
+  
+?>.
+
+Comment: Alarm deactivation- If window open-> close.
+
+If an incidentalarm has-status Deactivated and a window has-status Open then for the incidentalarm and the window execute <?
+   
+   KnowledgeDelete(string.Format("{0} has-status Open.", window)); 
+   KnowledgeInsert(string.Format("{0} has-status Closed.", window));
+   KnowledgeDelete(string.Format("{0} has-status Deactivated.", incidentalarm)); 
+   KnowledgeInsert(string.Format("{0} has-status Off.", incidentalarm));
+   WriteMessage("[" + DateTime.Now + "] " + incidentalarm + " has been deactivated. ");
+  
+?>. 
+
+Comment: Alarm deactivation- If an exterior door is unlocked-> locked.
+If an incidentalarm has-status Deactivated and an exterior has-status Unlocked then for the incidentalarm and the exterior execute <?
+   
+   KnowledgeDelete(string.Format("{0} has-status Unlocked.", exterior)); 
+   KnowledgeInsert(string.Format("{0} has-status Locked.", exterior));
+   KnowledgeDelete(string.Format("{0} has-status Deactivated.", incidentalarm)); 
+   KnowledgeInsert(string.Format("{0} has-status Off.", incidentalarm));
+   WriteMessage("[" + DateTime.Now + "] " + incidentalarm + " has been deactivated. ");
+  
+?>.
+
+
+Comment: Security-Mode deactivation: Notification and windows do not remain closed.
+
+If a security has-status Deactivated and the security has an incidentalarm  then for the security and the incidentalarm execute <?
+   
+   KnowledgeDelete(string.Format("{0} has-status Deactivated.", security)); 
+   KnowledgeInsert(string.Format("{0} has-status Off.", security));
+   KnowledgeDelete(string.Format("{0} has-status Off.", incidentalarm)); 
+   WriteMessage("[" + DateTime.Now + "] " + security + " has been deactivated. ");
+  
+?>.
+
+If a security has-status Deactivated and a window exists then for the security and the window execute <?
+   
+   KnowledgeDelete(string.Format("{0} has-status Deactivated.", security)); 
+   KnowledgeDelete(string.Format("{0} has-status Closed.", window));
+  
+?>.
+
+Part-4: 'Other'.
+
+Comment: Home Cinema Mode.
+
+Every television is a smartdevice.
+Television-Living-Room is a television that is-located-at Living-Room .
+Television-Bedroom is a television that is-located-at Bedroom.
+Every comfort is a mode.
+Home-Cinema-Living-Room is an homecinema that refers-to Living-Room .
+Every homecinema is a comfort.
+
+
+Comment: If a Home Cinema/ Sleep Mode is activated -> Notification Message, blinds,curtain, windows of the room close (if open) and ceiling light off (if on).
+
+If a comfort has-status Activated and the comfort refers-to a room then for the comfort and the room execute <?
+   KnowledgeDelete(string.Format("{0} has-status Off.", comfort)); 
+   KnowledgeDelete(string.Format("{0} has-status Activated.", comfort)); 
+   KnowledgeInsert(string.Format("{0} has-status On.", comfort));
+   WriteMessage("[" + DateTime.Now + "] " + comfort + " has been activated in " + room+ " . ");       
+?>.
+
+
+If a comfort has-final-status On and the comfort refers-to a room and a ceilinglight is-located-at the room and a blinds is-located-at the room and a curtain is-located-at the room and a window is-located-at the room then the ceilinglight has-status Off and the blinds has-status Closed and the curtain has-status Closed and the window has-status Closed.
+
+
+
+Comment: If Home Cinema is On then television of the room On.
+
+If a homecinema has-final-status On and the homecinema refers-to a room and a television is-located-at the room then the television has-status On.
+
+
+Comment: If Home Cinema/SLeep mode off -> Notification Message.
+
+If a comfort has-status Deactivated and the comfort refers-to a room then for the comfort and the room execute <?
+
+   WriteMessage("[" + DateTime.Now + "] " + comfort + " has been deactivated in " + room+ " . ");    
+   KnowledgeDelete(string.Format("{0} has-status On.", comfort));
+   KnowledgeDelete(string.Format("{0} has-status Deactivated.", comfort)); 
+   KnowledgeInsert(string.Format("{0} has-status Off.", comfort));    
+?>.
+
+
+Comment: Sleep Mode: If a resident sleeps at a room -> Sleep Mode On, television Off,       Notification Message and everything mentioned on the Home Cinema section above
+                     If it is time for the resident to wake up -> Sleep Mode Off.
+        
+Sleep-Mode-Bedroom is a sleepmode that refers-to Bedroom.
+Every sleepmode is a comfort.
+If a sleepmode has-final-status On and the sleepmode refers-to a room and a television is-located-at the room then the television has-status Off.
+
+If a resident sleeps-at a room and a sleepmode refers-to the room and the sleepmode has-status Off then the sleepmode has-status Activated.
+
+If a resident has-wake-up-time equal-to the value (1) and Current-Time has-value equal-to the value (2) and the value (1) is equal-to the value (2) and the resident sleeps-at a room and a sleepmode refers-to the room and the sleepmode has-final-status On then the sleepmode has-status Deactivated . 
+
+If a resident sleeps-at a room and a sleepmode refers-to the room and the sleepmode has-status Deactivated then for the resident and the room and the sleepmode execute <?
+   
+   KnowledgeDelete(string.Format("{0} sleeps-at {1}.", resident, room));   
+?>.
+   
+Comment: When a resident wakes up-> boiler is on/
+         When an adult wakes up-> coffee maker is also on.
+
+
+Every boiler is a smartdevice .
+Every coffeemaker is a smartdevice .
+Boiler is a boiler and is-located-at Bathroom .
+Coffee-Maker is a coffeemaker and is-located-at Kitchen .
+
+
+If a resident has-wake-up-time equal-to the value (1) and Current-Time has-value equal-to the value (2) and the value (1) is equal-to the value (2) and a boiler exists then the boiler has-status On.
+
+If an adult has-wake-up-time equal-to the value (1) and Current-Time has-value equal-to the value (2) and the value (1) is equal-to the value (2) and a coffeemaker exists then the coffeemaker has-status On.
+
+
+Comment: When a resident enters the Bathroom-> relaxing music On.
+
+Music-Player-Bathroom is a music-player and is-located-at Bathroom .
+Every music-player is a smartdevice .
+If Presence-Detection-Bathroom has-value equal-to 1 then Music-Player-Bathroom has-status On.
+If Presence-Detection-Bathroom has-value equal-to 0 then Music-Player-Bathroom has-status Off.
+
+
+Comment: When a resident takes a bath-> Heated Towel Rails On.
+
+Every heated-tower-rail is a smartdevice .
+Heated-Towel-Rails is a heated-tower-rail and is-located-at Bathroom.
+If a resident takes-a-bath-at Bathroom then Heated-Towel-Rails has-status On.
+
+
+Comment: If a trash can has-status Full  -> notification.
+Every trashcan is a smartdevice.
+Trash-Can-Bathroom is a trashcan and is-located-at Bathroom .
+Trash-Can-Kitchen is a trashcan and is-located-at Kitchen .
+
+If a trashcan has-status Full and the trashcan is-located-at a room then for the trashcan and the room execute <?
+   
+   WriteMessage("[" + DateTime.Now + "] " + trashcan + " in " + room + " is full and must be emptied.");    
+    KnowledgeDelete(string.Format("{0} has-status Full.", trashcan));  
+?>.
+
+
+Comment: If house empty -> Vacuum Cleaner Robot activated.
+
+Vacuum-Cleaning-Robot is a vacuum-cleaning-robot.
+Every vacuum-cleaning-robot is a smartdevice .
+If Smart-Home has-status Empty then Vacuum-Cleaning-Robot has-status Activated .
+If Smart-Home has-status Occupied then Vacuum-Cleaning-Robot has-status Deactivated.
+
+
+Comment: If house empty and a smart device has status on then notification.
+
+If Smart-Home has-status Empty and a smartdevice has-status On then for the smartdevice execute <?
+   
+   WriteMessage("[" + DateTime.Now + "] " + smartdevice + " is on. Do you want to turn it off?");    
+?>.
+
+
+Temperature-Bedroom has-value equal-to 30.
+Temperature-Living-Room has-value equal-to 30.
+Outdoor-Temperature has-value equal-to 19.
+Current-Time has-value equal-to 21.
+Presence-Detection-Bedroom has-value equal-to 1.
+Presence-Detection-Living-Room has-value equal-to 1.
+Presence-Detection-Bathroom has-value equal-to 1.
+Presence-Detection-Kitchen has-value equal-to 0.
+Security-Mode has-status Off.
+Paul has-wake-up-time equal-to 22.
+Sleep-Mode-Bedroom has-status Off.
+Home-Cinema-Living-Room has-status Off.
+Front-Door has-status Locked.
